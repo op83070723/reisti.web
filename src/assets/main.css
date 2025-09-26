@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Base
+   ========================================================= */
+@layer base {
+  html, body, #app { height: 100%; }
+  /* 流體標題尺寸 */
+  h1 { font-size: clamp(1.75rem, 2vw + 1rem, 3rem); }
+  h2 { font-size: clamp(1.25rem, 1.2vw + 1rem, 2rem); }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+}
+
+/* =========================================================
+   Components
+   ========================================================= */
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 font-medium
+           transition shadow-soft hover:shadow focus-visible:outline-none
+           focus-visible:ring-2 focus-visible:ring-brand disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-primary { @apply btn bg-brand text-white hover:bg-brand-dark active:translate-y-[1px]; }
+  .btn-outline {
+    @apply btn border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-50
+           dark:border-zinc-600 dark:bg-transparent dark:text-zinc-100 dark:hover:bg-white/10;
+  }
+  .btn-ghost { @apply btn bg-transparent hover:bg-zinc-100 dark:hover:bg-white/10; }
+
+  /* Cards（通用內容框）*/
+  .card {
+    @apply rounded-2xl border bg-white p-5 shadow-soft transition
+           hover:-translate-y-0.5 dark:border-zinc-700 dark:bg-zinc-800;
+  }
+
+  /* 點狀分隔線 */
+  .divider-dotted { border: 0; border-top: 1px dotted rgba(0,0,0,.25); }
+  .dark .divider-dotted { border-top-color: rgba(255,255,255,.28); }
+}
+
+/* =========================================================
+   Quote-style Corners（左上＋右下「引號角」）
+   作用於：.card、.frame-corners、.quote-frame
+   ✅ 使用單一 ::before 同時畫兩個角，避免和其他 ::after 衝突
+   ========================================================= */
+.card, .frame-corners, .quote-frame { position: relative; }
+
+/* 可調參數：顏色、長度、粗細、內縮距離 */
+:root {
+  --qf-color: rgba(17,17,17,.55);
+  --qf-size:  22px;   /* 角長度：18~24 建議 */
+  --qf-thick: 1.5px;  /* 線粗：1~2px */
+  --qf-gap:   10px;   /* 與內邊距距離 */
+}
+.dark :root { --qf-color: rgba(255,255,255,.50); }
+
+/* 同一個 ::before 同時畫「左上」與「右下」兩個 L 形角 */
+.card::before, .frame-corners::before, .quote-frame::before {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background:
+    /* 左上：水平 + 垂直 */
+    linear-gradient(var(--qf-color), var(--qf-color))
+      top var(--qf-gap) left var(--qf-gap) / var(--qf-size) var(--qf-thick) no-repeat,
+    linear-gradient(var(--qf-color), var(--qf-color))
+      top var(--qf-gap) left var(--qf-gap) / var(--qf-thick) var(--qf-size) no-repeat,
+    /* 右下：水平 + 垂直 */
+    linear-gradient(var(--qf-color), var(--qf-color))
+      bottom var(--qf-gap) right var(--qf-gap) / var(--qf-size) var(--qf-thick) no-repeat,
+    linear-gradient(var(--qf-color), var(--qf-color))
+      bottom var(--qf-gap) right var(--qf-gap) / var(--qf-thick) var(--qf-size) no-repeat;
+}
+
+/* 排除角線：在元素上加 .no-frame */
+.no-frame::before { display: none !important; }
+
+/* 關閉舊的切角 notch，避免視覺打架（若需另開白名單再說） */
+.notch-card::after { display: none !important; }
+
+/* =========================================================
+   Utilities
+   ========================================================= */
+@layer utilities {
+  .shadow-soft { box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* 低調條紋與雜訊（可當區塊輔助背景） */
+  .bg-stripes { background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.06) 0 2px, transparent 2px 14px); }
+  .dark .bg-stripes { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.07) 0 2px, transparent 2px 14px); }
+  .bg-noise {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0.06 0.12 0.18 0.24 0.3'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-repeat: repeat;
+    opacity: .25;
+  }
+  /* 延後渲染：視窗外就先不排版，進視窗才渲染 */
+  .cv-auto { content-visibility: auto; contain-intrinsic-size: 800px 600px; }
+
+  /* 提升到 GPU 合成層（可用在需要的容器上） */
+  .gpu { transform: translateZ(0); will-change: transform; }
+}
+
+/* =========================================================
+   Global Background（全站底圖：灰階光暈 + 點陣網格 + 淡條紋 + 雜訊）
+   ========================================================= */
+html, body { background: transparent; }
+
+/* Layer 1：大型灰階光暈（mesh） */
+body::before{
+  content:"";
+  position: fixed; inset:-12vh; z-index: -3; pointer-events:none;
+  background:
+    radial-gradient(60% 45% at 10% 20%, rgba(0,0,0,.10), transparent 60%),
+    radial-gradient(55% 40% at 85% 15%, rgba(0,0,0,.08), transparent 60%),
+    radial-gradient(70% 55% at 90% 90%, rgba(0,0,0,.06), transparent 60%);
+  filter: blur(2px);
+}
+.dark body::before{
+  background:
+    radial-gradient(60% 45% at 10% 20%, rgba(255,255,255,.10), transparent 60%),
+    radial-gradient(55% 40% at 85% 15%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(70% 55% at 90% 90%, rgba(255,255,255,.06), transparent 60%);
+}
+
+/* Layer 2：全域點陣網格（極淡） */
+body::after{
+  content:"";
+  position: fixed; inset:0; z-index:-2; pointer-events:none;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity:.10; mix-blend-mode:multiply;
+}
+.dark body::after{
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.18) 1px, transparent 1px);
+  opacity:.10; mix-blend-mode:overlay;
+}
+
+/* Layer 3：超淡斜向條紋，慢速滑動（年輕感） */
+#app::before{
+  content:"";
+  position: fixed; inset:-2rem; z-index:-1; pointer-events:none;
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.05) 0 2px, transparent 2px 18px);
+  opacity:.08;
+  animation: bgSlide 28s linear infinite;
+}
+.dark #app::before{
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.09) 0 2px, transparent 2px 18px);
+  opacity:.07;
+}
+
+/* Layer 4：超淡雜訊 */
+#app::after{
+  content:"";
+  position: fixed; inset:0; z-index:-1; pointer-events:none; opacity:.18;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0.06 0.12 0.18 0.24 0.3'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
+
+/* 動畫：條紋慢速滑動（尊重無動態偏好） */
+@keyframes bgSlide { from { background-position: 0 0; } to { background-position: 120px 0; } }
+@media (prefers-reduced-motion: reduce) { #app::before{ animation: none; } }
+
+/* ===== 關掉角落引號/框線的工具 ===== */
+.no-frame-corners::before,
+.no-frame-corners::after,
+.no-frame-corners *::before,
+.no-frame-corners *::after {
+  /* 你之前的角落引號是用 ::before/::after 畫出來的，這裡把它們全部關掉 */
+  content: none !important;
+  display: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  border: none !important;
+}
