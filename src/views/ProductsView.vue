@@ -65,7 +65,7 @@ const featured = [
 
 const concrete = [
   { title:'SDS-Plus 2枚刃', subtitle:'アンカー下穴に最適。', price:'¥1,280 から', img:'/products/sdsplus-2cut.jpg', to:'/products/concrete-drill/sds-plus-2cut' },
-  { title:'SDS-Plus 3枚刃', subtitle:'鉄筋でも噛み込みにくい。', price:'¥1,580 から', img:'/products/sdsplus-3cut.jpg', to:'/products/concrete-drill/sds-plus-3cut' },
+  { title:'SDS-Plus 3枚刃', subtitle:'鉄筋でも噛み込みにくい。', price:'¥1,580 から', img:'/products/sdsplus-3cut.png', to:'/products/concrete-drill/sds-plus-3cut' },
   { title:'SDS-Plus 4枚刃', subtitle:'外径磨耗を低減。', price:'¥1,880 から', img:'/products/sdsplus-4cut.jpg', to:'/products/concrete-drill/sds-plus-4cut' },
   { title:'SDS-Max 2/3/4枚刃', subtitle:'大径穿孔に。', price:'¥3,980 から', img:'/products/sdsmax.jpg', to:'/products/concrete-drill/sds-max-2cut' },
   { title:'六角軸(6.35mm)', subtitle:'充電工具にワンタッチ装着。', price:'¥980 から', img:'/products/hex-635.png', to:'/products/concrete-drill/hex' },
