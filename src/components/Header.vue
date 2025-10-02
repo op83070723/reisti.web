@@ -179,7 +179,7 @@ function badgeForFamily(key){
     case 'sds-plus': return 'SDS'
     case 'sds-max': return 'MAX'
     case 'hex-shank': return 'HEX'
-    case 'straight-shank': return '丸軸'
+    case 'M35': return 'M35'
     case 'bi-metal': return 'BI'
     case 'tct': return 'TCT'
     case 'standard': return 'STD'

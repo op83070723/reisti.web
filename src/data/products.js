@@ -2,7 +2,7 @@
 
 // 3大類（ProductsView 用）
 export const CATEGORIES = [
-  { slug: 'concrete-drill', name: 'コンクリートドリル', lead: 'SDS-Plus / SDS-Max / 六角軸 / 直軸' },
+  { slug: 'concrete-drill', name: 'コンクリートドリル', lead: 'SDS-Plus / SDS-Max / 六角軸 / M35' },
   { slug: 'hole-saw',       name: 'ホールソー',       lead: 'バイメタル / 超硬（TCT）' },
   { slug: 'step-drill',     name: 'ステップドリル',   lead: '標準 / TiAlN コーティング' },
 ];
@@ -128,9 +128,9 @@ export const FAMILIES = [
       {
         slug: 'sds-plus-2cut',
         label: '二枚刃',
-        hero: '/images/sds-plus/main-1.jpg',
+        hero: '/images/sds-plus/sdsplus-2cut.png',
         gallery: [
-          '/images/sds-plus/main-1.jpg',
+          '/images/sds-plus/sdsplus-2cut.png',
           '/images/sds-plus/detail-1.jpg',
           '/images/sds-plus/detail-2.jpg',
           '/images/sds-plus/drawing.jpg',
@@ -255,8 +255,8 @@ export const FAMILIES = [
 
   {
     category: 'concrete-drill',
-    family: 'straight-shank',
-    name: '直軸（丸軸）コンクリートドリル',
+    family: 'M35',
+    name: '六角軸鉄工ドリル(M35)',
     intro: 'ドリルドライバー・振動ドリル向けの汎用シャンク。',
     variants: [
       {

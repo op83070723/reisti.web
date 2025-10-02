@@ -21,7 +21,7 @@
           プロ仕様ドリルビット・REISTI
         </h1>
         <p class="mt-3 max-w-3xl text-white/90 md:text-lg">
-          台湾で25年以上のものづくり。SDS-Plus / SDS-Max / 六角軸 / 直軸、ホールソー、ステップドリルまで。
+          台湾で25年以上のものづくり。SDS-Plus / SDS-Max / 六角軸 / ホールソー、ステップドリルまで。
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <RouterLink to="/products" class="btn-primary">製品を見る</RouterLink>
@@ -43,8 +43,8 @@
     <section class="py-12 sm:py-16 hex-section-bg">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <div class="text-center mb-8">
-          <p class="text-sm font-semibold tracking-widest text-orange-500">Product</p>
-          <h2 class="mt-1 text-3xl sm:text-4xl font-extrabold text-zinc-900">製品情報</h2>
+          <p class="text-sm font-semibold tracking-widest text-red-600 [text-shadow:0_1px_2px_rgba(0,0,0,0.35),0_0_10px_rgba(0,0,0,0.18)]">Product</p>
+          <h2 class="mt-1 text-3xl sm:text-4xl font-extrabold text-zinc-700 [text-shadow:0_1px_2px_rgba(0,0,0,0.35),0_0_10px_rgba(0,0,0,0.18)]">製品情報</h2>
         </div>
 
         <div class="grid-hex" role="list">
@@ -60,16 +60,24 @@
               :key="card.to"
               :to="card.to"
               role="listitem"
-              class="hex hex-white"
+              class="hex hex-white relative"
               :aria-label="card.title"
             >
               <!-- 去背 PNG：置中、等比 -->
               <img
                 :src="card.img"
                 :alt="card.title"
-                class="hex-img-center"
+                class="hex-img-center z-0"
                 @error="e => (e.target.style.opacity = 0.001)"
               />
+              <!-- 新增：可見標題（覆蓋在圖片上） -->
+             
+            <span class="pointer-events-none absolute text-sm left-1/2 -translate-x-1/2 bottom-[8%] z-10
+         px-2 py-1 font-bold text-zinc-700
+         [text-shadow:0_1px_2px_rgba(0,0,0,0.35),0_0_10px_rgba(0,0,0,0.18)]"
+         >
+         {{ card.title }}
+         </span>
             </RouterLink>
           </div>
         </div>
@@ -100,12 +108,12 @@ onMounted(start); onBeforeUnmount(stop)
 /* ========== 六角卡片資料（PNG 去背） ========== */
 /* 你的去背圖請放 public/cards/ 下，建議 PNG 透明底 */
 const cards = [
-  { title:'SDS-Plus / SDS-Max', img:'/cards/sdsplus.png',  to:'/products/concrete-drill/sds-plus-2cut' },
-  { title:'六角軸（6.35mm）',   img:'/cards/hex.png',      to:'/products/concrete-drill/hex' },
-  { title:'バイメタル / 超硬（TCT）', img:'/cards/holesaw.png', to:'/products/hole-saw/bi' },
-  { title:'SDS-Max（大径）',  img:'/cards/sdsmax.png',   to:'/products/concrete-drill/sds-max-2cut' },
-  { title:'ステップドリル（TiAlN）', img:'/cards/step.png',     to:'/products/step-drill/std' },
-  { title:'直軸（丸軸）',      img:'/cards/straight.png', to:'/products/concrete-drill/straight' },
+  { title:'SDS-Plus', img:'/products/sdsplus-3cut.png',  to:'/products/concrete-drill/sds-plus-2cut' },
+  { title:'六角軸(6.35)',   img:'/products/hex-635.png',      to:'/products/concrete-drill/hex' },
+  { title:'バイメタル', img:'/products/holesaw-bi.png', to:'/products/hole-saw/bi' },
+  { title:'六角軸鉄工ドリル',  img:'/products/M35.png',   to:'/products/concrete-drill/M35' },
+  { title:'超硬(TCT)', img:'/products/holesaw-tct.png',     to:'/products/step-drill/std' },
+  { title:'SDS-Max',      img:'/cards/straight.png', to:'/products/concrete-drill/sds-max-2cut' },
 ]
 const rows = computed(()=>{
   const out=[]; for(let i=0;i<cards.length;i+=3) out.push(cards.slice(i,i+3)); return out
@@ -193,6 +201,7 @@ const rows = computed(()=>{
 .hex-img-center{
   position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);
   width: 78%; height: 78%; object-fit: contain;
+  z-index: 0; /* 確保圖片在底層，標題可覆蓋在上 */
 }
 
 /* 手機：單欄直排，取消位移與負 margin 疊合 */
@@ -202,6 +211,7 @@ const rows = computed(()=>{
   .grid-hex-row--offset{ margin-left: 0; }
 }
 </style>
+
 
 
 

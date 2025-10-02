@@ -64,17 +64,36 @@ const featured = [
 ]
 
 const concrete = [
-  { title:'SDS-Plus 2枚刃', subtitle:'アンカー下穴に最適。', price:'¥1,280 から', img:'/products/sdsplus-2cut.jpg', to:'/products/concrete-drill/sds-plus-2cut' },
-  { title:'SDS-Plus 3枚刃', subtitle:'鉄筋でも噛み込みにくい。', price:'¥1,580 から', img:'/products/sdsplus-3cut.png', to:'/products/concrete-drill/sds-plus-3cut' },
+  { title:'SDS-Plus 2枚刃', subtitle:'直進性と耐久性のベストバラ⁠ンス。', price:'¥1,170 から', img:'/products/sdsplus-2cut.png', to:'/products/concrete-drill/sds-plus-2cut',
+    artW: 250,    
+    artX: -50,       
+    artY: -40,        
+    rotate: -42 },
+  { title:'SDS-Plus 3枚刃', subtitle:'鉄筋でも噛み込みにくい。', price:'¥1,580 から', img:'/products/sdsplus-3cut.png', to:'/products/concrete-drill/sds-plus-3cut', 
+    artW: 320,    
+    artX: 0,       
+    artY: 10,        
+    rotate: 0 },
   { title:'SDS-Plus 4枚刃', subtitle:'外径磨耗を低減。', price:'¥1,880 から', img:'/products/sdsplus-4cut.jpg', to:'/products/concrete-drill/sds-plus-4cut' },
-  { title:'SDS-Max 2/3/4枚刃', subtitle:'大径穿孔に。', price:'¥3,980 から', img:'/products/sdsmax.jpg', to:'/products/concrete-drill/sds-max-2cut' },
-  { title:'六角軸(6.35mm)', subtitle:'充電工具にワンタッチ装着。', price:'¥980 から', img:'/products/hex-635.png', to:'/products/concrete-drill/hex' },
-  { title:'直軸（丸軸）', subtitle:'卓上ボール盤などに。', price:'¥780 から', img:'/products/straight.jpg', to:'/products/concrete-drill/straight' },
+  { title:'六角軸(6.35mm)', subtitle:'充電工具にワンタッチ装着。', price:'¥980 から', img:'/products/hex-635.png', to:'/products/concrete-drill/hex', 
+    artW: 300,    
+    artX: 0,       
+    artY: 30,        
+    rotate: 0 },
+  { title:'六角軸鉄工ドリル(M35)', subtitle:'卓上ボール盤などに。', price:'¥780 から', img:'/products/M35.png', to:'/products/concrete-drill/M35' },
 ]
 
 const holesaw = [
-  { title:'バイメタル', subtitle:'コスパ良好。', price:'¥1,580 から', img:'/products/holesaw-bi.jpg', to:'/products/hole-saw/bi' },
-  { title:'超硬(TCT)', subtitle:'硬い材にも。', price:'¥2,980 から', img:'/products/holesaw-tct.jpg', to:'/products/hole-saw/tct' },
+  { title:'バイメタルホールソー', subtitle:'金属や木材に。', price:'¥1,580 から', img:'/products/holesaw-bi.png', to:'/products/hole-saw/bi', 
+    artW: 250,    
+    artX: -50,       
+    artY: 20,        
+    rotate: 0 },
+  { title:'超硬ホールソー(TCT)', subtitle:'硬い材にも。', price:'¥2,980 から', img:'/products/holesaw-tct.png', to:'/products/hole-saw/tct', 
+    artW: 270,    
+    artX: -30,       
+    artY: 15,        
+    rotate: 0 },
 ]
 
 const stepdrill = [
