@@ -28,8 +28,8 @@ export default async function handler(req, res) {
 
     const { error } = await resend.emails.send({
       // ⚠️ 這個寄件人要用你在 Resend 驗證過的網域信箱
-      from: process.env.MAIL_FROM || 'REISTI <noreply@your-verified-domain.com>',
-      to: process.env.MAIL_TO || 'info@your-verified-domain.com',
+      from: process.env.MAIL_FROM || 'REISTI <noreply@reisti.org>',
+      to: process.env.MAIL_TO || 'chenytbiz@reisti.org',
       replyTo: email, // ✅ 用 replyTo（駝峰），讓你回覆時直接回到填寫者
       subject: `【お問い合わせ】${name}`,
       html: `
