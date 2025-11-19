@@ -1,17 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 
-// ✉️ 表單資料
 const name = ref('')
 const email = ref('')
 const phone = ref('')
 const message = ref('')
-const hp = ref('') // honeypot（隱藏欄位防機器人）
+const hp = ref('') // 蜜罐：要保持空字串
 const loading = ref(false)
 const done = ref(false)
 const errorMsg = ref('')
 
-// 🚀 送出處理
 async function submit() {
   loading.value = true
   errorMsg.value = ''
@@ -25,7 +23,7 @@ async function submit() {
         email: email.value.trim(),
         phone: phone.value.trim(),
         message: message.value.trim(),
-        hp: hp.value, // 應該是空字串
+        hp: hp.value, // 應該為空；若填了，後端會靜默當成功
       }),
     })
     const data = await r.json()
@@ -44,20 +42,19 @@ async function submit() {
 </script>
 
 <template>
-  <!-- ✅ 加上 novalidate 避免瀏覽器自動驗證 -->
+  <!-- 全面關閉瀏覽器驗證 -->
   <form class="space-y-4" @submit.prevent="submit" novalidate>
     <input
       v-model="name"
-      required
       placeholder="お名前 / 会社名"
       class="input"
     />
 
+    <!-- 用 text 避免瀏覽器強制驗證 email 格式 -->
     <input
       v-model="email"
-      type="email"
-      required
-      placeholder="メールアドレス"
+      type="text"
+      placeholder="メールアドレス（自由入力）"
       class="input"
     />
 
@@ -70,13 +67,12 @@ async function submit() {
 
     <textarea
       v-model="message"
-      required
       placeholder="ご用件・ご要望"
       rows="6"
       class="input"
     ></textarea>
 
-    <!-- 🐝 honeypot：隱藏的防機器人欄位 -->
+    <!-- 蜜罐（隱藏），真人看不到，bot 會誤填 -->
     <input
       v-model="hp"
       tabindex="-1"
@@ -89,18 +85,16 @@ async function submit() {
       送信しました。担当者よりご連絡いたします。
     </p>
 
-    <button class="btn" :disabled="loading">
+    <!-- 再加一層保險：就算表單沒加 novalidate，按鈕也不做驗證 -->
+    <button class="btn" :disabled="loading" formnovalidate>
       {{ loading ? '送信中…' : '送信' }}
     </button>
   </form>
 </template>
 
 <style scoped>
-.input {
-  @apply w-full rounded-xl border px-4 py-3;
-}
-.btn {
-  @apply w-full rounded-xl bg-black text-white py-3 font-semibold disabled:opacity-50;
-}
+.input { @apply w-full rounded-xl border px-4 py-3; }
+.btn { @apply w-full rounded-xl bg-black text-white py-3 font-semibold disabled:opacity-50; }
 </style>
+
 
