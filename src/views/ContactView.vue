@@ -61,7 +61,7 @@ async function submit() {
       <input
         v-model="email"
         type="text"
-        placeholder="メールアドレス（例：taro@gmail.com）"
+        placeholder="メールアドレス（例：reisti@gmail.com）"
         class="input"
       />
 
